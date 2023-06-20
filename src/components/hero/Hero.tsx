@@ -22,7 +22,7 @@ const Hero = () => {
             panificação, ao mesmo tempo em que introduzimos toques modernos 
           </p>
           <div className="flex items-center justify-center mt-10">
-            <Button type="button" text="PRODUTOS" />
+            <Button type="button" text="PRODUTOS Teste" />
           </div>
         </div>
       </div>
