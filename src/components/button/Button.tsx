@@ -1,16 +1,35 @@
-import React from 'react'
+import React from "react";
 
 interface ButtonProps {
-    type: string | any
-    text: string
+  type: string | any;
+  text: string;
 }
 
-const Button: React.FC<ButtonProps> = ({type, text}) => {
+const colorBody = "bg-white text-black hover:bg-black hover:text-white";
+const colorModal = "bg-white text-black hover:bg-black hover:text-white";
+
+const Button: React.FC<ButtonProps> = ({ type, text }) => {
   return (
-    <button type={type} className={` bg-white text-black  tracking-widest py-3 px-8 duration-200 rounded-sm hover:bg-black hover:text-white md:text-lg md:py-4 md:px-10`} >
-        {text}
+    <button
+      type={type}
+      className={` 
+        relative 
+        w-full  
+        rounded-sm 
+        bg-yellow-600 
+        py-2 
+        tracking-widest 
+        text-white duration-200 
+        hover:bg-yellow-700 
+        hover:text-white 
+        md:py-3 
+        md:text-lg 
+        lg:text-2xl
+      `}
+    >
+      {text}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

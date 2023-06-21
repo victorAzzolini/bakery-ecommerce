@@ -16,8 +16,8 @@ const Input: React.FC<InputProps> = ({
   required,
 }) => {
   return (
-    <div className="w-full relative mb-4">
-      <label className="text-lg">{label}</label>
+    <div className="relative mb-4 w-full">
+      <label className="text-md">{label}</label>
       <input
         type={type}
         disabled={disabled}
@@ -25,11 +25,11 @@ const Input: React.FC<InputProps> = ({
         required={required}
         className={`
           w-full
-          p-3 
-          font-light
-          bg-white
+          rounded-sm 
           border
-          rounded-sm
+          bg-white
+          p-3
+          font-light
           outline-none
         `}
       />

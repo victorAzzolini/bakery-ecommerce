@@ -5,33 +5,24 @@ import Modal from "../modal/Modal";
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 
-const LoginModal = () => {
+const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
-  const toogleToRegister = useCallback(() => {
-    loginModal.onClose();
-    registerModal.onOpen();
+  const toogleToLogin = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
   }, [loginModal, registerModal]);
 
   const bodyContent = (
-    <div className="flex flex-col">
-      <Input id="Email" type="email" label="Email" />
-      <Input id="Email" type="password" label="Senha" />
-      <span
-        className="
-          trasition 
-          text-sm 
-          underline 
-          underline-offset-2 
-          duration-200 
-          hover:cursor-pointer 
-          hover:text-yellow-600
-        "
-      >
-        Esqueceu sua senha?
-      </span>
+    <div>
+      <Input id="name" type="text" label="Nome" />
+      <Input id="name" type="text" label="Sobrenome" />
+      <Input id="name" type="text" label="Endereço" />
+      <Input id="name" type="text" label="nº" />
+      <Input id="password" type="password" label="Senha" />
+      <Input id="password" type="password" label="Confirmar senha" />
     </div>
   );
 
@@ -39,7 +30,6 @@ const LoginModal = () => {
     <div
       className="
         relative 
-        mt-6 
         flex 
         w-full 
         flex-col 
@@ -57,18 +47,18 @@ const LoginModal = () => {
           hover:cursor-pointer 
           hover:text-yellow-600
         "
-        onClick={toogleToRegister}
+        onClick={toogleToLogin}
       >
-        Não tem conta. Clique Aqui
+        Já tem conta? Clique Aqui
       </span>
     </div>
   );
 
   return (
     <Modal
-      isOpen={loginModal.isOpen}
-      title="Login"
-      onClose={loginModal.onClose}
+      isOpen={registerModal.isOpen}
+      title="Register"
+      onClose={registerModal.onClose}
       body={bodyContent}
       footer={footerContent}
       flexReverse={true}
@@ -76,4 +66,4 @@ const LoginModal = () => {
   );
 };
 
-export default LoginModal;
+export default RegisterModal;

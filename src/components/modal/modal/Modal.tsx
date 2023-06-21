@@ -3,6 +3,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { IoMdClose } from "react-icons/io";
 import Input from "@/components/input/Input";
+import Button from "@/components/button/Button";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -10,6 +11,7 @@ interface ModalProps {
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
+  flexReverse: boolean;
   actionLabel?: string;
   disabled?: boolean;
   secondaryAction?: () => {};
@@ -19,16 +21,24 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
-  title, 
+  title,
   body,
   footer,
+  flexReverse,
   actionLabel,
   disabled,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
+  if (flexReverse) {
+  }
+
   useEffect(() => {
     setShowModal(isOpen);
+
+    isOpen
+      ? document.body.classList.add("overflow-hidden")
+      : document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
   const handleClose = useCallback(() => {
@@ -39,8 +49,17 @@ const Modal: React.FC<ModalProps> = ({
     setShowModal(false);
     setTimeout(() => {
       onClose();
-    }, 300);
+    }, 200);
   }, [disabled, onClose]);
+
+  const handleBackgroundClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (event.target === event.currentTarget) {
+        handleClose();
+      }
+    },
+    [handleClose]
+  );
 
   if (!isOpen) {
     return null;
@@ -48,28 +67,88 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      <div className=" fixed z-50 inset-0 flex flex-row-reverse  bg-neutral-800/70">
+      <div
+        className={` 
+          fixed 
+          inset-0 
+          z-50 
+          flex 
+          ${flexReverse ? "flex-row-reverse" : "flex-row"}  
+          overflow-hidden 
+          bg-neutral-800/70 
+        `}
+        onClick={handleBackgroundClick}
+      >
         <div
           className={`
-          translate 
-          duration-300 
-          ${showModal ? " translate-x-0" : "translate-x-full"}
-          ${showModal ? " opacity-100" : "opacity-0"}
+            translate 
+            duration-300 
+            ${
+              showModal
+                ? "translate-x-0"
+                : `${flexReverse ? "translate-x-full" : "translate-x-[-400px]"}`
+            }
           `}
         >
-          <div className="translate relative w-80 h-[100vh] bg-white flex flex-col ">
-            <div className="flex items-center p-4 relative border-b-[1px] text-xl">
-                Login
+          <div
+            className="
+              translate 
+              relative 
+              flex 
+              h-[100vh] 
+              w-80 
+              flex-col 
+              overflow-auto 
+              bg-white
+            "
+          >
+            <div
+              className="
+                relative 
+                flex 
+                items-center 
+                border-b-[1px] 
+                p-4 
+                text-xl
+              "
+            >
+              {title}
             </div>
             <button
-              className="p-1 border-0 hover:text-amber-400 transition absolute right-2 top-3"
+              className="
+                absolute 
+                right-2 
+                top-3 
+                border-0 
+                p-1 
+                transition 
+                hover:text-amber-400
+              "
               onClick={handleClose}
             >
               <IoMdClose size={26} />
             </button>
-            <div className="relative p-6 flex flex-col">
-              <Input id={"email"} label="Email" type="email" />
-              <Input id={"email"} label="Password" type="password" />
+            <div
+              className={`
+                relative 
+                flex 
+                flex-col 
+                ${flexReverse?"p-6 pb-2" : "p-0"}
+              `}
+            >
+              {body}
+            </div>
+            <div
+              className="
+                relative 
+                flex 
+                items-center 
+                justify-center 
+                p-6 
+                pt-0
+              "
+            >
+              {footer}
             </div>
           </div>
         </div>

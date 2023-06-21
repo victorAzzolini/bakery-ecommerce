@@ -7,6 +7,9 @@ import {
 } from "react-icons/ai";
 import { Oswald } from "next/font/google";
 
+import useLoginModal from "@/hooks/useLoginModal";
+import useMenuModal from "@/hooks/useMenuModal"
+
 const oswald = Oswald({
   subsets: ["latin"],
 });
@@ -14,6 +17,8 @@ const oswald = Oswald({
 const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const loginModal = useLoginModal();
+  const menuModal = useMenuModal();
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -39,23 +44,73 @@ const Header = () => {
 
   return (
     <header
-      className={`flex justify-center ${
-        visible ? "fixed w-[100vw]" : ""
-      }`}
+      className={`
+        z-10 
+        flex 
+        justify-center 
+        ${visible ? "fixed w-[100vw]" : ""}
+      `}
     >
       <div
-        className={`flex text-3xl absolute bg-amber-50 py-3 z-10 w-[100vw] rounded-sm  justify-around items-center text-gray-700 ${visible ? "lg:w-[100vw] mt-0" : "mt-8 lg:w-[60vw]"} `}
+        className={`
+          absolute 
+          flex 
+          w-[100vw] 
+          items-center 
+          justify-around  
+          rounded-sm 
+          bg-amber-50 
+          py-3 
+          text-3xl 
+          text-gray-700 
+          ${visible ? "mt-0 lg:w-[100vw]" : "mt-8 lg:w-[60vw]"}
+        `}
       >
-        <div className="text-2xl md:text-3xl duration-200  hover:text-amber-500 hover:scale-105 lg:hidden">
+        <div
+          className="
+            text-2xl 
+            duration-200 
+            hover:scale-105  
+          hover:text-amber-500 
+            hover:cursor-pointer
+            md:text-3xl 
+            lg:hidden
+          "
+          onClick={menuModal.onOpen}
+        >
           <AiOutlineMenu />
         </div>
         <div
-          className={`${oswald.className} px-6 ml-8 text-4xl font-extrabold md:px-36 md:ml-24 lg:px-0 lg:ml-0`}
+          className={`
+            ${oswald.className} 
+            ml-8 
+            px-6 
+            text-4xl 
+            font-extrabold 
+            md:ml-24 
+            md:px-36 
+            lg:ml-0 
+            lg:px-0
+          `}
         >
           <a href="./">BAKERY</a>
         </div>
-        <nav className="hidden lg:block px-40 text-xl font-medium">
-          <ul className="flex gap-4 justify-around items-center">
+        <nav
+          className="
+            hidden 
+            px-40 
+            text-xl 
+            font-medium 
+            lg:block
+          "
+        >
+          <ul
+            className="
+              flex items-center 
+              justify-around 
+              gap-4
+            "
+          >
             <li className="duration-200 hover:text-amber-600">
               <a href="./">Products</a>
             </li>
@@ -65,19 +120,67 @@ const Header = () => {
           </ul>
         </nav>
         <nav>
-          <ul className="flex justify-around items-center lg:gap-1">
-            <li className="text-3xl duration-200 hover:text-amber-600 hover:scale-105 ">
+          <ul
+            className="
+              flex 
+              items-center 
+              justify-around 
+              lg:gap-1
+            "
+          >
+            <li
+              className="
+                text-3xl 
+                duration-200 
+                hover:scale-105 
+                hover:text-amber-600 
+              "
+            >
               <AiOutlineSearch />
             </li>
-            <li className="hidden text-3xl duration-200  hover:text-amber-600 hover:scale-105 md:block ">
+            <li
+              className=" 
+                text-3xl 
+                duration-200  
+                hover:scale-105 
+                hover:cursor-pointer 
+                hover:text-amber-600 
+                md:block 
+              "
+              onClick={loginModal.onOpen}
+            >
               <AiOutlineUser />
             </li>
-            <li className="text-3xl duration-200 hover:text-amber-600 hover:scale-105 flex gap-2">
-              <span className="absolute w-4 h-4 bg-black rounded-full text-white flex items-center justify-center p-2 ml-5  text-sm ">
+            <li
+              className="
+                flex 
+                gap-2 
+                text-3xl 
+                duration-200 
+                hover:scale-105 
+                hover:text-amber-600
+              "
+            >
+              <span
+                className="
+                  absolute 
+                  ml-5 
+                  flex 
+                  h-4 
+                  w-4 
+                  items-center 
+                  justify-center 
+                  rounded-full 
+                  bg-black 
+                  p-2 
+                  text-sm  
+                  text-white 
+                "
+              >
                 1
               </span>
               <AiOutlineShoppingCart />
-              <div className="hidden md:block text-lg">R$0,00</div>
+              <div className="hidden text-lg md:block">R$0,00</div>
             </li>
           </ul>
         </nav>
